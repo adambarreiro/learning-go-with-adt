@@ -113,6 +113,7 @@ func (l *list) Delete(position int) *list {
 	}
 	pointer.previous.next = pointer.next
 	pointer.next.previous = pointer.previous
+	pointer.value = nil
 	l.size--
 	return l
 }
@@ -149,7 +150,7 @@ func (l *list) getPrintable() string {
 		i := 0
 
 		for i < l.Size() {
-			output += fmt.Sprintf("%s, ", pointer.value)
+			output += fmt.Sprintf("%v, ", pointer.value)
 			pointer = pointer.next
 			i++
 		}
