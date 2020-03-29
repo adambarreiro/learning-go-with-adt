@@ -5,3 +5,11 @@ Some of them should be pretty similar to the ones in the Go `container` package,
 
 I followed a TDD approach to check specifications of the ADT and check all is well done.
 
+So far, the repository contains:
+
+- Linked lists
+
+Planned to continue with:
+
+- AVL trees
+- Hash table
