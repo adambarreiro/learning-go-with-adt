@@ -48,36 +48,44 @@ func (l *list) Head() interface{} {
 	return l.head.value
 }
 
+// Returns the last element of the list
+// O(1)
+func (l *list) Butt() interface{} {
+	return l.head.previous.value
+}
+
 // Adds an element to the beginning of the list
 // O(1)
-func (l *list) Prepend(element interface{}) {
+func (l *list) Prepend(element interface{}) *list {
 	var newItem = item{element, &l.head, l.head.previous}
 
 	l.head.previous.next = &newItem
 	l.head.previous = &newItem
 	l.head = newItem
 	l.size++
+	return l
 }
 
 // Adds an element at the end of the list
 // O(1)
-func (l *list) Append(element interface{}) {
+func (l *list) Append(element interface{}) *list {
 	if l.IsEmpty() {
 		l.Prepend(element)
-		return
+		return l
 	}
 	var newItem = item{element, &l.head, l.head.previous}
 
 	l.head.previous.next = &newItem
 	l.head.previous = &newItem
 	l.size++
+	return l
 }
 
-// Obtains the element in the given position
+// Obtains the element in the given position. If the position is out of bounds, returns nil
 // O(n)
-func (l *list) Get(position int) (interface{}, error) {
-	if position >= l.Size() {
-		return nil, fmt.Errorf("provided position %d is out of bounds of this list with size %d", position, l.size)
+func (l *list) Get(position int) interface{} {
+	if position < 0 || position >= l.Size() {
+		return nil
 	}
 
 	i := 0
@@ -87,14 +95,14 @@ func (l *list) Get(position int) (interface{}, error) {
 		pointer = l.head.next
 		i++
 	}
-	return pointer.value, nil
+	return pointer.value
 }
 
-// Deletes an element from the list (and returns it)
+// Deletes an element at given position from the list. If the position is out of bounds, simply does nothing.
 // O(n)
-func (l *list) Delete(position int) (interface{}, error) {
-	if position >= l.Size() {
-		return nil, fmt.Errorf("provided position %d is out of bounds of this list with size %d", position, l.size)
+func (l *list) Delete(position int) *list {
+	if position < 0 || position >= l.Size() {
+		return l
 	}
 
 	i := 0
@@ -106,7 +114,7 @@ func (l *list) Delete(position int) (interface{}, error) {
 	pointer.previous.next = pointer.next
 	pointer.next.previous = pointer.previous
 	l.size--
-	return pointer.value, nil
+	return l
 }
 
 // Prints the list in the standard output
