@@ -1,8 +1,15 @@
+// This package implements a linked list. It should be very similar to the implementation provided in
+// the container package of the Go language.
+//
+// This was done just as a programming exercise.
+//
 package list
 
 import (
 	"fmt"
 )
+
+// ---- Data types -----------------------------------------------------------------------------------------------------
 
 type item struct {
 	value    interface{}
@@ -15,27 +22,34 @@ type list struct {
 	size int
 }
 
+// ---- Public members -------------------------------------------------------------------------------------------------
+
 // Creates a new empty list.
+// O(1)
 func New() *list {
 	return new(list).init()
 }
 
 // Returns the size of the list.
+// O(1)
 func (l *list) Size() int {
 	return l.size
 }
 
 // Returns true if the list has no elements.
+// O(1)
 func (l *list) IsEmpty() bool {
 	return l.Size() == 0
 }
 
 // Returns the first element of the list
+// O(1)
 func (l *list) Head() interface{} {
 	return l.head.value
 }
 
 // Adds an element to the beginning of the list
+// O(1)
 func (l *list) Prepend(element interface{}) {
 	var newItem = item{element, &l.head, &l.head}
 
@@ -45,6 +59,7 @@ func (l *list) Prepend(element interface{}) {
 }
 
 // Adds an element at the end of the list
+// O(n)
 func (l *list) Append(element interface{}) {
 	if l.IsEmpty() {
 		l.head = item{element, l.head.next, l.head.previous}
@@ -66,6 +81,7 @@ func (l *list) Append(element interface{}) {
 }
 
 // Obtains the element in the given position
+// O(n)
 func (l *list) Get(position int) (interface{}, error) {
 	if position >= l.Size() {
 		return nil, fmt.Errorf("provided position %d is out of bounds of this list with size %d", position, l.size)
@@ -81,7 +97,41 @@ func (l *list) Get(position int) (interface{}, error) {
 	return pointer.value, nil
 }
 
+// Deletes an element from the list (and returns it)
+// O(n)
+func (l *list) Delete(position int) (interface{}, error) {
+	if position >= l.Size() {
+		return nil, fmt.Errorf("provided position %d is out of bounds of this list with size %d", position, l.size)
+	}
+
+	i := 0
+	var pointer = &l.head
+	for i < position {
+		pointer = l.head.next
+		i++
+	}
+	pointer.previous.next = pointer.next
+	pointer.next.previous = pointer.previous
+	l.size--
+	return pointer.value, nil
+}
+
+// Prints the list in the standard output
+// O(n)
+func (l *list) Print() {
+	fmt.Print(l.getPrintable())
+}
+
+// Prints the list in the standard output
+// O(n)
+func (l *list) Println() {
+	fmt.Println(l.getPrintable())
+}
+
+// ---- Private members ------------------------------------------------------------------------------------------------
+
 // Initializes the list when a new one is requested.
+// O(1)
 func (l *list) init() *list {
 	l.size = 0
 	l.head.next = &l.head
@@ -89,17 +139,8 @@ func (l *list) init() *list {
 	return l
 }
 
-// Prints the list in the standard output
-func (l *list) Print() {
-	fmt.Print(l.getPrintable())
-}
-
-// Prints the list in the standard output
-func (l *list) Println() {
-	fmt.Println(l.getPrintable())
-}
-
 // Gets a printable string from the list
+// O(n)
 func (l *list) getPrintable() string {
 	output := ""
 	if !l.IsEmpty() {

@@ -25,6 +25,20 @@ func TestWhenAnElementIsPrependedItShouldBeTheHead(t *testing.T) {
 	t.Errorf("The head of the list should be Bar but it was %s and the size was %d instead of 2", l.Head(), l.Size())
 }
 
+func TestWhenAnElementIsDeletedShouldnBePresent(t *testing.T) {
+	l := New()
+	previousSize := l.Size()
+
+	l.Append("1")
+	l.Append("2")
+	l.Append("3")
+	value, err := l.Delete(1)
+	if (l.Size() == previousSize+2) && value == "2" && err == nil {
+		return
+	}
+	t.Errorf("The deleted element should be '2' instead of %s and the size should be 2 instead of %d", value, l.Size())
+}
+
 func TestWhenAnElementIsAppendedItShouldBeTheLastElement(t *testing.T) {
 	l := New()
 	previousSize := l.Size()
