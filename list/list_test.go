@@ -63,7 +63,6 @@ func TestAppendAndDeleteShouldEqualToSameList(t *testing.T) {
 	t.Error("List should be empty when appending and deleting the element")
 }
 
-
 func TestWhenAnElementIsPrependedItShouldBeTheHead(t *testing.T) {
 	l := New()
 	previousSize := l.Size()
