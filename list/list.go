@@ -51,32 +51,25 @@ func (l *list) Head() interface{} {
 // Adds an element to the beginning of the list
 // O(1)
 func (l *list) Prepend(element interface{}) {
-	var newItem = item{element, &l.head, &l.head}
+	var newItem = item{element, &l.head, l.head.previous}
 
+	l.head.previous.next = &newItem
 	l.head.previous = &newItem
 	l.head = newItem
 	l.size++
 }
 
 // Adds an element at the end of the list
-// O(n)
+// O(1)
 func (l *list) Append(element interface{}) {
 	if l.IsEmpty() {
-		l.head = item{element, l.head.next, l.head.previous}
-		l.size++
+		l.Prepend(element)
 		return
 	}
+	var newItem = item{element, &l.head, l.head.previous}
 
-	i := 0
-	var pointer = &l.head
-
-	for i < l.size {
-		pointer = pointer.next
-		i++
-	}
-	var newItem = item{element, nil, pointer}
-	pointer.next = &newItem
-	pointer.next.next = pointer.next
+	l.head.previous.next = &newItem
+	l.head.previous = &newItem
 	l.size++
 }
 
@@ -142,17 +135,18 @@ func (l *list) init() *list {
 // Gets a printable string from the list
 // O(n)
 func (l *list) getPrintable() string {
-	output := ""
+	output := "["
 	if !l.IsEmpty() {
-		output += "["
 		pointer := &l.head
 		i := 0
+
 		for i < l.Size() {
 			output += fmt.Sprintf("%s, ", pointer.value)
 			pointer = pointer.next
 			i++
 		}
-		output = fmt.Sprintf("%s]", output[0:len(output)-2])
+		output = fmt.Sprintf("%s", output[0:len(output)-2])
 	}
+	output += "]"
 	return output
 }
