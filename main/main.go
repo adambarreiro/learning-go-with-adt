@@ -1,20 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"github.com/adambarreiro/list"
 )
 
 func main()  {
 	l := list.New()
 
-	l.Prepend("Perico palotes")
-	fmt.Println(l.Head())
-	fmt.Println(l.Size())
-
-	value, _ := l.Get(0)
-	fmt.Println(value)
-
-	_, err := l.Get(1)
-	fmt.Println(err)
+	l.Append("Perico palotes1")
+	l.Append("Perico palotes2")
+	l.Append("Perico palotes3")
+	l.Append("Perico palotes4")
+	l.Append("Perico palotes5")
+	l.Append("Perico palotes6")
+	l.Println()
 }

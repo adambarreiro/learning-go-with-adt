@@ -18,10 +18,23 @@ func TestWhenAnElementIsPrependedItShouldBeTheHead(t *testing.T) {
 	previousSize := l.Size()
 
 	l.Prepend("Foo")
-	if (l.Size() == previousSize + 1) && l.Head() == "Foo" {
+	l.Prepend("Bar")
+	if (l.Size() == previousSize + 2) && l.Head() == "Bar" {
 		return
 	}
-	t.Errorf("The head of the list should be Foo but it was %s and the size was %d instead of 1", l.Head(), l.Size())
+	t.Errorf("The head of the list should be Bar but it was %s and the size was %d instead of 2", l.Head(), l.Size())
+}
+
+func TestWhenAnElementIsAppendedItShouldBeTheLastElement(t *testing.T) {
+	l := New()
+	previousSize := l.Size()
+
+	l.Append("Foo")
+	l.Append("Bar")
+	if (l.Size() == previousSize + 2) && l.Head() == "Foo" {
+		return
+	}
+	t.Errorf("The head of the list should be Foo but it was %s and the size was %d instead of 2", l.Head(), l.Size())
 }
 
 func TestWhenGetNthElementItShouldBeCorrect(t *testing.T) {
