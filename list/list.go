@@ -1,7 +1,8 @@
 // This package implements a linked list. It should be very similar to the implementation provided in
-// the container package of the Go language.
+// the container package of the Go language, although it lacks of some functions and probably performance is
+// worst.
 //
-// This was done just as a programming exercise.
+// This was done just as a programming exercise to learn Go and gain some agility with its syntax.
 //
 package list
 
