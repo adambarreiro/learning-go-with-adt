@@ -7,26 +7,45 @@ import (
 func TestListShouldBeEmptyWhenCreated(t *testing.T) {
 	l := New()
 
-	if l.Size() != 0 && l.IsEmpty() {
-		t.Error("List size should be 0")
+	if l.Size() == 0 && l.IsEmpty() && l.Head() == nil {
+		return
 	}
+	t.Error("List size should be 0")
 }
 
-func TestListShouldHaveOneMoreElementWhenElementIsAdded(t *testing.T) {
+func TestWhenAnElementIsPrependedItShouldBeTheHead(t *testing.T) {
 	l := New()
 	previousSize := l.Size()
 
 	l.Prepend("Foo")
-	if l.Size() != previousSize + 1 {
-		t.Errorf("List size should be 1 but it was %d", l.Size())
+	if (l.Size() == previousSize + 1) && l.Head() == "Foo" {
+		return
 	}
+	t.Errorf("The head of the list should be Foo but it was %s and the size was %d instead of 1", l.Head(), l.Size())
 }
 
-func TestListHeadShouldBeTheElementWhenAnElementIsPrepended(t *testing.T) {
+func TestWhenGetNthElementItShouldBeCorrect(t *testing.T) {
 	l := New()
 
-	l.Prepend("Foo")
-	if (l.Head() != "Foo") {
-		t.Errorf("The head of the list should be Foo but it was %s", l.Head())
+	l.Prepend("1")
+	l.Prepend("2")
+	l.Prepend("3")
+	value, err := l.Get(2)
+	if value == "3" && err == nil {
+		return
 	}
+	t.Errorf("The element should be '3' but it was %s", value)
+}
+
+func TestWhenGetAnOutboundElementShouldGetAnError(t *testing.T) {
+	l := New()
+
+	l.Prepend("1")
+	l.Prepend("2")
+	l.Prepend("3")
+	_, err := l.Get(3)
+	if err != nil {
+		return
+	}
+	t.Errorf("An error should arise but it was not")
 }
