@@ -19,7 +19,7 @@ func TestWhenAnElementIsPrependedItShouldBeTheHead(t *testing.T) {
 
 	l.Prepend("Foo")
 	l.Prepend("Bar")
-	if (l.Size() == previousSize + 2) && l.Head() == "Bar" {
+	if (l.Size() == previousSize+2) && l.Head() == "Bar" {
 		return
 	}
 	t.Errorf("The head of the list should be Bar but it was %s and the size was %d instead of 2", l.Head(), l.Size())
@@ -31,7 +31,7 @@ func TestWhenAnElementIsAppendedItShouldBeTheLastElement(t *testing.T) {
 
 	l.Append("Foo")
 	l.Append("Bar")
-	if (l.Size() == previousSize + 2) && l.Head() == "Foo" {
+	if (l.Size() == previousSize+2) && l.Head() == "Foo" {
 		return
 	}
 	t.Errorf("The head of the list should be Foo but it was %s and the size was %d instead of 2", l.Head(), l.Size())

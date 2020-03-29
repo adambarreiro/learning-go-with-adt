@@ -5,8 +5,8 @@ import (
 )
 
 type item struct {
-	value interface{}
-	next *item
+	value    interface{}
+	next     *item
 	previous *item
 }
 
@@ -37,7 +37,7 @@ func (l *list) Head() interface{} {
 
 // Adds an element to the beginning of the list
 func (l *list) Prepend(element interface{}) {
-	var newItem = item{element, &l.head,&l.head}
+	var newItem = item{element, &l.head, &l.head}
 
 	l.head.previous = &newItem
 	l.head = newItem
@@ -111,12 +111,7 @@ func (l *list) getPrintable() string {
 			pointer = pointer.next
 			i++
 		}
-		output = fmt.Sprintf("%s]",output[0:len(output)-2])
+		output = fmt.Sprintf("%s]", output[0:len(output)-2])
 	}
 	return output
 }
-
-
-
-
-
